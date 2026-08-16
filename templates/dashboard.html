@@ -3,233 +3,351 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Certimedia Admin Panel — Dashboard</title>
+    <title>Marksman Cockpit — Dashboard</title>
 
-    <!-- Google Fonts: readable script for headings + system sans for body -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Fonts: script for calligraphy + crisp sans for UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
       :root{
-        --card-brown: #4A2E1B;
-        --white: #ffffff;
-        --black: #000000;
-        --muted: #666666;
+        --bg: #08090A; /* stealth black */
+        --card-onyx: #0F1314; /* deep onyx */
+        --panel-onyx: #0A0C0D;
+        --neon-blue: #00D4FF;
+        --neon-blue-2: #00A8FF;
+        --gold: #FFD166;
+        --gold-glow: rgba(255,209,102,0.18);
+        --muted: #8B9398;
+        --glass: rgba(255,255,255,0.03);
       }
 
       html,body{
         height:100%;
         margin:0;
-        background:var(--white);
-        color:var(--black);
+        background:linear-gradient(180deg,var(--bg) 0%, #050506 100%);
+        color:#E6EEF3;
         font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
         -webkit-font-smoothing:antialiased;
         -moz-osx-font-smoothing:grayscale;
       }
 
-      .container{
-        max-width:1100px;
-        margin:40px auto;
-        padding:20px;
+      .wrap{
+        max-width:1200px;
+        margin:28px auto;
+        padding:28px;
       }
 
       header{
         display:flex;
-        align-items:center;
+        align-items:flex-start;
         justify-content:space-between;
         gap:20px;
-        margin-bottom:24px;
+        margin-bottom:22px;
       }
 
       .brand{
         display:flex;
+        gap:18px;
         align-items:center;
-        gap:12px;
       }
 
-      .brand .logo{
-        width:56px;
-        height:56px;
-        border-radius:8px;
-        background:var(--card-brown);
+      .cockpit-badge{
+        width:72px;
+        height:72px;
+        border-radius:14px;
+        background:linear-gradient(135deg,#070708 40%, #14181A 100%);
+        box-shadow:0 8px 30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
         display:flex;
         align-items:center;
         justify-content:center;
-        color:var(--black);
+        border:1px solid rgba(255,255,255,0.03);
+      }
+
+      .cockpit-badge .logo{
+        color:var(--neon-blue);
         font-weight:700;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        font-size:22px;
+        letter-spacing:1px;
+        text-shadow:0 2px 12px rgba(0,212,255,0.18);
       }
 
-      h1,h2,h3{
-        font-family: 'Dancing Script', cursive;
-        color:var(--black);
+      .titles{
+        display:flex;
+        flex-direction:column;
+      }
+
+      .titles h1{
         margin:0;
+        font-size:20px;
+        color:#EAF8FF;
+        letter-spacing:1px;
       }
 
-      h1{ font-size:28px; }
-      h2{ font-size:20px; }
+      /* glowing script phrase */
+      .calligraphy{
+        margin-top:6px;
+        font-family:'Great Vibes', cursive;
+        font-size:20px;
+        color:var(--gold);
+        text-shadow: 0 4px 20px rgba(255,209,102,0.45), 0 1px 0 rgba(255,255,255,0.03);
+        opacity:0.98;
+      }
+
+      /* Tactical subheader */
+      .tactical{
+        font-family: 'Inter', monospace;
+        color:var(--neon-blue);
+        font-weight:700;
+        letter-spacing:1.6px;
+        background: linear-gradient(90deg, rgba(0,212,255,0.06), rgba(0,168,255,0.03));
+        padding:8px 12px;
+        border-radius:8px;
+        border:1px solid rgba(0,212,255,0.06);
+        box-shadow:0 6px 30px rgba(0,168,255,0.04);
+      }
 
       .controls{
         display:flex;
-        gap:12px;
         align-items:center;
+        gap:12px;
       }
 
-      input[type="number"]{
-        padding:8px 10px;
-        border-radius:6px;
-        border:1px solid #ddd;
-        font-size:14px;
+      .control-input{
+        background:var(--glass);
+        border:1px solid rgba(255,255,255,0.04);
+        color:#BFDCEC;
+        padding:10px 12px;
+        border-radius:8px;
         width:220px;
-      }
-      button{
-        padding:10px 14px;
-        border-radius:6px;
-        border: none;
-        background:var(--card-brown);
-        color:var(--black);
-        cursor:pointer;
-        font-weight:600;
-      }
-      button.secondary{
-        background:transparent;
-        border:1px solid #ddd;
-        color:var(--black);
+        outline:none;
       }
 
+      .btn{
+        background:linear-gradient(180deg,var(--neon-blue),var(--neon-blue-2));
+        color:#001019;
+        padding:10px 14px;
+        border-radius:10px;
+        font-weight:700;
+        border:none;
+        cursor:pointer;
+        box-shadow:0 10px 30px rgba(0,164,255,0.12), 0 0 18px rgba(0,212,255,0.06);
+      }
+
+      .btn.secondary{
+        background:transparent;
+        color:var(--neon-blue);
+        border:1px solid rgba(0,212,255,0.08);
+        box-shadow:none;
+      }
+
+      .topbar-counter{
+        position:fixed;
+        left:50%;
+        transform:translateX(-50%);
+        top:18px;
+        z-index:1200;
+        background: linear-gradient(180deg, rgba(255,214,102,0.06), rgba(255,214,102,0.03));
+        padding:12px 22px;
+        border-radius:12px;
+        display:flex;
+        gap:18px;
+        align-items:center;
+        justify-content:center;
+        border:1px solid rgba(255,209,102,0.12);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 36px var(--gold-glow);
+        pointer-events:none;
+      }
+
+      .topbar-counter .label{
+        font-size:12px;
+        color:#0B0B0B;
+        font-weight:700;
+        opacity:0.9;
+        letter-spacing:1px;
+      }
+
+      .topbar-counter .value{
+        font-family:'Great Vibes', cursive;
+        font-size:28px;
+        color:var(--gold);
+        text-shadow: 0 6px 28px rgba(255,209,102,0.35), 0 1px 0 rgba(255,255,255,0.02);
+        pointer-events:auto;
+      }
+
+      /* main grid */
       .grid{
+        margin-top:30px;
         display:grid;
-        grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+        grid-template-columns: 1.2fr 1fr;
         gap:18px;
       }
 
-      .card{
-        background:var(--card-brown);
-        color:var(--black);
-        padding:18px;
-        border-radius:12px;
-        box-shadow:0 6px 18px rgba(0,0,0,0.06);
-        min-height:120px;
-      }
+      .column{ display:flex; flex-direction:column; gap:18px; }
 
-      .card small{ color:var(--black); opacity:0.85; }
-
-      .net-worth{
-        display:flex;
-        align-items:flex-start;
-        justify-content:space-between;
-        gap:10px;
-      }
-
-      .net-worth .value{
-        font-size:22px;
-        font-weight:700;
-      }
-
-      /* Banner when hitting $1 trillion */
-      .banner{
-        position:fixed;
-        left:50%;
-        transform:translateX(-50%) translateY(-160%);
-        top:12px;
-        background: linear-gradient(90deg,#ffd27a,#fff1c2);
-        color:var(--black);
-        padding:16px 22px;
-        border-radius:10px;
-        box-shadow:0 10px 30px rgba(0,0,0,0.12);
-        z-index:9999;
-        width:calc(100% - 40px);
-        max-width:900px;
-        text-align:center;
-        transition:transform 450ms cubic-bezier(.2,.9,.3,1),opacity 300ms;
-        opacity:0;
-      }
-      .banner.show{
-        transform:translateX(-50%) translateY(0);
-        opacity:1;
-      }
-
-      .trillion-card{
-        display:none;
-        background: linear-gradient(135deg,#fffbe6,#ffd27a);
-        color:var(--black);
-        padding:22px;
+      .panel{
+        background:linear-gradient(180deg,var(--card-onyx), #071011);
         border-radius:14px;
-        text-align:center;
-        box-shadow:0 12px 32px rgba(0,0,0,0.12);
+        padding:18px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+        border:1px solid rgba(255,255,255,0.02);
       }
-      .trillion-card.show{ display:block; }
 
-      .muted{ color:var(--muted); font-size:13px; }
+      .panel h2{ margin:0; font-size:18px; color:#E8F8FF; }
+      .panel .muted{ color:var(--muted); font-size:13px; margin-top:6px; }
+
+      /* Speedometer / gauge style */
+      .gauge{
+        margin-top:14px;
+        height:160px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+
+      .gauge .dial{
+        width:160px; height:160px; border-radius:50%;
+        background: radial-gradient(circle at 30% 25%, rgba(0,212,255,0.03), transparent 30%), linear-gradient(180deg,#071012,#081214);
+        border:2px solid rgba(0,212,255,0.06);
+        box-shadow:0 8px 30px rgba(0,0,0,0.7), 0 0 30px rgba(0,168,255,0.02) inset;
+        display:flex; align-items:center; justify-content:center; position:relative;
+      }
+
+      .gauge .reading{
+        text-align:center;
+      }
+
+      .gauge .reading .big{
+        font-size:18px; font-weight:800; color:var(--neon-blue);
+        text-shadow:0 6px 20px rgba(0,212,255,0.12);
+      }
+
+      .gauge .needle{
+        position:absolute; width:2px; height:72px; background:linear-gradient(180deg,var(--neon-blue),#0077b6);
+        top:18px; left:50%; transform-origin:50% 86%; transform:translateX(-50%) rotate(0deg);
+        border-radius:2px;
+        box-shadow:0 4px 18px rgba(0,164,255,0.18);
+      }
+
+      /* metrics grid */
+      .metrics{
+        display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-top:8px;
+      }
+
+      .metric{
+        background:linear-gradient(180deg,#071012,#061013);
+        border-radius:10px; padding:12px; text-align:center; border:1px solid rgba(255,255,255,0.02);
+      }
+
+      .metric .num{ font-weight:800; color:var(--neon-blue); font-size:16px; }
+      .metric .label{ color:var(--muted); font-size:12px; margin-top:6px; }
 
       footer{ margin-top:30px; color:var(--muted); font-size:13px; }
 
-      @media (max-width:520px){
-        .controls{ flex-direction:column; align-items:stretch; }
-        input[type="number"]{ width:100%; }
-      }
+      @media (max-width:900px){ .grid{ grid-template-columns:1fr; } .metrics{ grid-template-columns: repeat(2,1fr); } .control-input{ width:160px; } }
     </style>
   </head>
 
   <body>
-    <div class="banner" id="trillionBanner" role="status" aria-live="polite">
-      <strong>congratulation myself !!!</strong>
-      <div style="margin-top:6px;">you finally reached the destination after a long way</div>
+    <!-- Gold glowing trillion counter fixed top -->
+    <div class="topbar-counter" role="status" aria-live="polite">
+      <div class="label">GLOBAL LEDGER</div>
+      <div class="value" id="trillionTop">$0</div>
     </div>
 
-    <main class="container">
+    <main class="wrap">
       <header>
         <div class="brand">
-          <div class="logo">CM</div>
-          <div>
-            <h1>Certimedia Admin</h1>
-            <div class="muted">Dashboard</div>
+          <div class="cockpit-badge"><div class="logo">MS</div></div>
+          <div class="titles">
+            <h1>MARKSMAN PROTOCOL — Cockpit Admin</h1>
+            <div class="calligraphy">congratulations myself !!!! you finally reached the destiny after a long way</div>
+            <div style="margin-top:8px;">
+              <span class="tactical">MARKSMAN PROTOCOL: ONLINE // SIGHT ALINGED</span>
+            </div>
           </div>
         </div>
 
         <div class="controls" aria-hidden="false">
-          <label for="netInput" class="muted">Simulate net worth (USD)</label>
-          <input id="netInput" type="number" placeholder="Enter amount e.g. 1000000" step="1" aria-label="Net worth input" />
-          <button id="applyBtn">Apply</button>
-          <button id="oneTrillionBtn">Simulate $1 trillion</button>
+          <input id="netInput" class="control-input" type="number" placeholder="enter amount in USD" aria-label="Net worth" />
+          <button id="applyBtn" class="btn">APPLY</button>
+          <button id="oneTrillBtn" class="btn secondary">SIMULATE $1 TRILLION</button>
         </div>
       </header>
 
       <section class="grid" aria-live="polite">
-        <div class="card" aria-hidden="false">
-          <h2>Overview</h2>
-          <p class="muted">Quick metrics</p>
-          <div style="margin-top:12px;" class="net-worth">
-            <div>
-              <small>Current net worth</small>
-              <div class="value" id="netDisplay">$0</div>
+        <div class="column">
+          <div class="panel">
+            <h2>Cockpit Overview</h2>
+            <div class="muted">Live telemetry and fiscal overlay</div>
+
+            <div class="gauge" aria-hidden="false">
+              <div class="dial">
+                <div class="needle" id="needle"></div>
+                <div class="reading">
+                  <div class="big" id="netDisplay">$0</div>
+                  <div class="muted">Net Worth</div>
+                </div>
+              </div>
             </div>
-            <div class="muted">Status: <strong id="statusText">Calm</strong></div>
+
+            <div class="metrics">
+              <div class="metric">
+                <div class="num" id="speedVal">0</div>
+                <div class="label">Vehicle RPM (k)</div>
+              </div>
+              <div class="metric">
+                <div class="num" id="usersVal">0</div>
+                <div class="label">Active Systems</div>
+              </div>
+              <div class="metric">
+                <div class="num" id="uptimeVal">0d</div>
+                <div class="label">Uptime</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h2>Telemetry Feed</h2>
+            <div class="muted">Tactical tracking & sensor matrix</div>
+            <div style="margin-top:12px; font-family: monospace; color:#BEEBFF;">
+              • Lock state: STABLE<br/>
+              • Targeting: IDLE<br/>
+              • Auto-correct: ENGAGED
+n            </div>
           </div>
         </div>
 
-        <div class="card">
-          <h2>Revenue</h2>
-          <p class="muted">This quarter</p>
-          <div style="margin-top:12px;">$125,000</div>
-        </div>
+        <div class="column">
+          <div class="panel">
+            <h2>Quick Controls</h2>
+            <div class="muted">One-click operations</div>
 
-        <div class="card">
-          <h2>Active Users</h2>
-          <p class="muted">Last 30 days</p>
-          <div style="margin-top:12px;">34,520</div>
-        </div>
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn">ENGAGE MARKSMAN</button>
+              <button class="btn secondary">CALIBRATE SIGHT</button>
+              <button class="btn secondary">EXPORT LOGS</button>
+            </div>
 
-        <!-- Customized $1 trillion card placeholder -->
-        <div id="trillionCardPlaceholder" class="trillion-card" role="region" aria-label="$1 trillion celebration">
-          <h2 style="font-size:28px; margin-bottom:6px;">$1,000,000,000,000</h2>
-          <div style="font-weight:700; font-size:18px;">Net worth milestone — CERTIFIED</div>
-          <p style="margin-top:8px;">congratulation myself !!! you finally reached the destination after a long way</p>
-        </div>
+            <div style="margin-top:18px;">
+              <label class="muted" for="note">Operator override</label>
+              <input id="note" class="control-input" placeholder="enter command" />
+            </div>
+          </div>
 
+          <div class="panel">
+            <h2>Notifications</h2>
+            <div class="muted">Recent events</div>
+            <ul style="margin-top:12px; color:#CFEFFB;">
+              <li>12:02 — Trajectory sync completed</li>
+              <li>11:58 — Gold counter audit OK</li>
+              <li>10:34 — Sensor matrix warmed</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       <footer>
-        Built for Certimedia • Background white, regal brown cards (#4A2E1B), headings in a readable script font
+        Hypercar Cockpit UI • Stealth black, deep onyx containers, neon-blue accents, gold milestone indicator
       </footer>
     </main>
 
@@ -237,75 +355,81 @@
       (function(){
         const netInput = document.getElementById('netInput');
         const applyBtn = document.getElementById('applyBtn');
-        const oneTrillionBtn = document.getElementById('oneTrillionBtn');
+        const oneTrillBtn = document.getElementById('oneTrillBtn');
         const netDisplay = document.getElementById('netDisplay');
-        const statusText = document.getElementById('statusText');
-        const banner = document.getElementById('trillionBanner');
-        const trillionCard = document.getElementById('trillionCardPlaceholder');
+        const topTrillion = document.getElementById('trillionTop');
+        const needle = document.getElementById('needle');
+        const speedVal = document.getElementById('speedVal');
+        const usersVal = document.getElementById('usersVal');
+        const uptimeVal = document.getElementById('uptimeVal');
 
         let netWorth = 0;
         const TRILLION = 1_000_000_000_000;
 
-        function formatUSD(n){
-          // Compact formatting preserving large precision
+        function formatCurrency(n){
           try{
             const absn = Math.abs(n);
-            if(absn >= 1e12) return '$' + (n/1e12).toFixed(3) + 'T';
-            if(absn >= 1e9) return '$' + (n/1e9).toFixed(3) + 'B';
-            if(absn >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+            if(absn >= 1e12) return '$' + (n/1e12).toFixed(3) + ' T';
+            if(absn >= 1e9) return '$' + (n/1e9).toFixed(3) + ' B';
+            if(absn >= 1e6) return '$' + (n/1e6).toFixed(2) + ' M';
             return '$' + n.toLocaleString();
           }catch(e){ return '$' + n; }
         }
 
-        function checkMilestone(){
-          if(netWorth >= TRILLION){
-            showTrillionCelebration();
-          }
-        }
-
-        function showTrillionCelebration(){
-          // show banner
-          banner.classList.add('show');
-          // show trillion card
-          trillionCard.classList.add('show');
-          // update status
-          statusText.textContent = 'Trillionaire';
-
-          // Optional: send a POST webhook or trigger additional behavior here
-          // Example: we log to console — replace with real integration if needed
-          console.info('Milestone reached: $1 trillion');
+        function rotateNeedleForValue(val){
+          // Map netWorth (0..TRILLION) to -120deg .. 120deg
+          const ratio = Math.min(Math.max(val / TRILLION, 0), 1);
+          const deg = -120 + (ratio * 240);
+          needle.style.transform = 'translateX(-50%) rotate(' + deg + 'deg)';
         }
 
         function updateDisplay(){
-          netDisplay.textContent = formatUSD(netWorth);
-          if(netWorth < TRILLION){
-            statusText.textContent = 'Calm';
-            banner.classList.remove('show');
-            trillionCard.classList.remove('show');
+          netDisplay.textContent = formatCurrency(netWorth);
+          topTrillion.textContent = formatCurrency(netWorth);
+          // gold glow when >= TRILLION
+          if(netWorth >= TRILLION){
+            topTrillion.style.color = 'var(--gold)';
+            topTrillion.style.textShadow = '0 10px 36px rgba(255,209,102,0.42), 0 2px 4px rgba(255,255,255,0.04)';
+            // animated pulse
+            topTrillion.animate([
+              { transform: 'scale(1)', filter: 'drop-shadow(0 0 6px rgba(255,209,102,0.15))' },
+              { transform: 'scale(1.03)', filter: 'drop-shadow(0 0 26px rgba(255,209,102,0.22))' },
+              { transform: 'scale(1)', filter: 'drop-shadow(0 0 6px rgba(255,209,102,0.15))' }
+            ], { duration:1600, iterations:2 });
+          } else {
+            topTrillion.style.color = '#EAF8FF';
+            topTrillion.style.textShadow = '';
           }
+
+          // update metrics (toy simulation)
+          const speed = Math.floor((netWorth / TRILLION) * 8000);
+          speedVal.textContent = speed;
+          usersVal.textContent = Math.max(1, Math.floor((netWorth / 1e9) * 8)).toLocaleString();
+          uptimeVal.textContent = Math.floor((netWorth / 1e11)).toString() + 'd';
+
+          rotateNeedleForValue(netWorth);
+        }
+
+        function setNet(n){
+          netWorth = Number(n) || 0;
+          updateDisplay();
         }
 
         applyBtn.addEventListener('click', function(){
           const val = parseFloat(netInput.value || 0);
           if(isNaN(val)) return;
-          netWorth = val;
-          updateDisplay();
-          checkMilestone();
+          setNet(val);
         });
 
-        oneTrillionBtn.addEventListener('click', function(){
-          netWorth = TRILLION;
-          updateDisplay();
-          checkMilestone();
+        oneTrillBtn.addEventListener('click', function(){
+          setNet(TRILLION);
         });
 
-        // allow pressing Enter on input
-        netInput.addEventListener('keydown', function(e){
-          if(e.key === 'Enter') applyBtn.click();
-        });
+        netInput.addEventListener('keydown', function(e){ if(e.key === 'Enter') applyBtn.click(); });
 
-        // initialize
+        // init
         updateDisplay();
+
       })();
     </script>
   </body>
