@@ -88,7 +88,6 @@ def root() -> HTMLResponse:
     .footer{margin-top:18px;color:var(--muted);font-size:13px}
 
     /* small responsive */
-    @media (max-width:900px){.metrics{grid-template-columns:repeat(2,1fr)}.greeting{font-size:32px}}
     @media (max-width:520px){.metrics{grid-template-columns:1fr}.greeting{font-size:28px}}
 
     /* subtle hover */
