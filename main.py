@@ -41,7 +41,10 @@ def root() -> HTMLResponse:
 
     metrics_json = json.dumps(metrics)
 
-    html = f"""<!doctype html>
+    # Use a plain triple-quoted string (NOT an f-string) so the many literal
+    # braces in the CSS/JS are preserved. Inject only the three dynamic values
+    # using unique placeholders that we replace below.
+    html = """<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -105,7 +108,7 @@ def root() -> HTMLResponse:
           <div class="greeting">Welcome, Operator</div>
           <div class="sub">Stealth Admin Dashboard</div>
         </div>
-        <div class="muted">Generated at: {generated_at}</div>
+        <div class="muted">Generated at: __GENERATED_AT__</div>
       </div>
 
       <div class="metrics">
@@ -141,7 +144,7 @@ def root() -> HTMLResponse:
 
         <div class="metric">
           <h3>Environment</h3>
-          <div class="value">{hostname}</div>
+          <div class="value">__HOSTNAME__</div>
           <div class="muted">Host process</div>
         </div>
 
@@ -153,7 +156,7 @@ def root() -> HTMLResponse:
 
   <script>
     // Server-side metrics embedded as JSON
-    const SERVER_METRICS = {metrics_json};
+    const SERVER_METRICS = __METRICS_JSON__;
 
     // Animate a numeric counter (handles large values smoothly)
     function animateCount(el, start, end, duration){
@@ -202,6 +205,9 @@ def root() -> HTMLResponse:
 </body>
 </html>
 """
+
+    # Inject the three dynamic values into the static HTML safely
+    html = html.replace("__GENERATED_AT__", generated_at).replace("__HOSTNAME__", hostname).replace("__METRICS_JSON__", metrics_json)
 
     return HTMLResponse(content=html, status_code=200)
 
