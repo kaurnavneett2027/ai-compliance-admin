@@ -18,9 +18,9 @@ app = FastAPI(title="AI Compliance Admin - Hypercar Cockpit")
 
 # where we store the generated HTML and persistent state
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_DIR = os.path.join(BASE_DIR, "static")
-HTML_PATH = os.path.join(STATIC_DIR, "dashboard.html")
-STATE_PATH = os.path.join(STATIC_DIR, "state.json")
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+HTML_PATH = os.path.join(TEMPLATES_DIR, "dashboard.html")
+STATE_PATH = os.path.join(TEMPLATES_DIR, "state.json")
 
 # process start time for velocity & uptime
 _START_TIME = time.time()
@@ -28,8 +28,8 @@ _START_TIME = time.time()
 # default simulation constants
 ARR_PER_FILE_USD = 120.0  # simulated ARR contribution per file checked (USD)
 
-# ensure static dir exists
-os.makedirs(STATIC_DIR, exist_ok=True)
+# ensure templates dir exists
+os.makedirs(TEMPLATES_DIR, exist_ok=True)
 
 
 class Metrics(BaseModel):
@@ -98,7 +98,7 @@ DASHBOARD_HTML = r"""
     html,body{height:100%;margin:0;background:linear-gradient(180deg,#030306 0%, #071018 60%);color:#e6f7ff}
     .wrap{display:flex;flex-direction:column;height:100%;padding:28px;gap:18px}
     header{display:flex;align-items:center;gap:20px}
-    .logo{width:84px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 6px 30px rgba(0,255,246,0.06), inset 0 -4px 20px rgba(255,61,129,0.04);display:flex;align-items:center;justify-content:center;font-weight:700;color:#031;letter-spacing:1px}
+    .logo{width:84px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 6px 30px rgba(0,255,246,0.06), inset 0 -4px 20px rgba(255,61,129,[...]
     h1{font-size:20px;margin:0}
     .subtitle{color:var(--muted);font-size:13px}
     main{display:flex;gap:18px;flex:1}
@@ -319,7 +319,12 @@ except Exception:
 
 @app.get("/", response_class=FileResponse)
 def root():
-    """Serve the static hypercar cockpit dashboard HTML using FileResponse."""
+    """Serve the hypercar cockpit dashboard HTML using FileResponse.
+
+    The dashboard HTML is written to `templates/dashboard.html` at startup, and
+    this route now serves that file directly instead of relying on a separate
+    `static` directory.
+    """
     # FileResponse requires a filesystem path. We wrote the file at startup.
     return FileResponse(HTML_PATH, media_type="text/html")
 
