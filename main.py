@@ -210,6 +210,16 @@ def root() -> HTMLResponse:
     html = html.replace("__GENERATED_AT__", generated_at).replace("__HOSTNAME__", hostname).replace("__METRICS_JSON__", metrics_json)
 
     return HTMLResponse(content=html, status_code=200)
+    import os
+import requests
+
+CONTROLLED_URL = os.environ.get("CONTROLLED_SERVICE_URL")
+API_SECRET = os.environ.get("INTERNAL_API_SECRET")
+
+def send_command_to_controlled_app(data: dict):
+    headers = {"X-API-Secret": API_SECRET}
+    response = requests.post(f"{CONTROLLED_URL}/api/v1/execute", json=data, headers=headers)
+    return response.json()
 
 
 if __name__ == '__main__':
